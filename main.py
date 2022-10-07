@@ -18,9 +18,15 @@ msg["Subject"] = "multipart test"
 msg["From"] = os.getenv('sender_email')
 msg["To"] = os.getenv('receiver_email')
 
-# other enviornment variables
+# other environment variables
 client_id = os.getenv('client_id')
 client_secret = os.getenv('client_secret')
 password = os.getenv('password')
 
-print(password)
+# SeatGeek Query params
+# Lat & Lng: Bk,Ny
+# Event type: Concert
+# Radius: 30 mi (default)
+# Per page: 10 (default)
+# page: 1 (default)
+response = requests.get(f"https://api.seatgeek.com/2/events?lat=40.650002&lon=-73.949997&client_id={client_id}&type=concert&&client_secret={client_secret}")
