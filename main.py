@@ -40,8 +40,11 @@ for event in events:
         title = event['title']
         ticket_url = event['url']
 
-        # date needs to be formatted
         date = event['datetime_local']
+
+        date_time_obj = datetime.datetime.strptime(date, '%Y-%m-%dT%H:%M:%S')
+        event_month = date_time_obj.strftime('%B')
+        event_day = date_time_obj.day
 
         venue = event['venue']
 
@@ -57,9 +60,11 @@ for event in events:
 
             print(title)
             print(ticket_url)
-            print(date)
+            print(event_month, event_day)
             print(venue_name)
             print(city)
             print(state)
             print(image_url)
+
+
 
