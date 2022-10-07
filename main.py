@@ -3,7 +3,7 @@
 # Clinton Merritt
 
 
-import smtplib, ssl, email, requests, os, datetime
+import smtplib, ssl, email, requests, os, datetime, jinja2
 from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
