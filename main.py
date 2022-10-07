@@ -9,3 +9,10 @@ from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+# Create MIMEMultipart object
+msg = MIMEMultipart("alternative")
+msg["Subject"] = "multipart test"
+msg["From"] = sender_email
+msg["To"] = receiver_email
+
+
