@@ -4,6 +4,9 @@
 
 
 import smtplib, ssl, email, requests, os, datetime, jinja2
+from email.message import EmailMessage
+from email.headerregistry import Address
+from email.utils import make_msgid
 from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
@@ -12,15 +15,16 @@ from dotenv import load_dotenv, find_dotenv
 from jinja2 import Environment
 import html_template
 
+
 load_dotenv(find_dotenv())
 
-# Create MIMEMultipart object
-msg = MIMEMultipart("alternative")
+# Create base & fields for email
+msg = EmailMessage()
 msg["Subject"] = "Tonight's Featured Events in Your Area!"
 msg["From"] = os.getenv('sender_email')
 msg["To"] = os.getenv('receiver_email')
 
-# other environment variables
+# environment variables
 client_id = os.getenv('client_id')
 client_secret = os.getenv('client_secret')
 password = os.getenv('password')
@@ -54,6 +58,7 @@ for event in events:
     event_day = date_time_obj.day
 
     venue = event['venue']
+    venue_name = venue['name_v2']
     city = venue['city']
     state = venue['state']
 
@@ -62,9 +67,11 @@ for event in events:
     image_url = performer['image']
 
     formatted_event = {'formatted_title': title, 'formatted_ticket_url': ticket_url, 'formatted_month': event_month,
-                       'formatted_day': event_day, 'formatted_venue': venue, 'formatted_city': city,
+                       'formatted_day': str(event_day), 'formatted_venue_name': venue_name, 'formatted_city': city,
                        'formatted_state': state, 'formatted_image_url': image_url,
                        }
+    print(formatted_event['formatted_day'])
+    print(formatted_event['formatted_month'])
 
     events_list.append(formatted_event)
 
@@ -77,7 +84,7 @@ events_html = MIMEText(
         ticket_url0=events_list[0]['formatted_ticket_url'],
         month0=events_list[0]['formatted_month'],
         day0=events_list[0]['formatted_day'],
-        venue0=events_list[0]['formatted_venue'],
+        venue0=events_list[0]['formatted_venue_name'],
         city0=events_list[0]['formatted_city'],
         state0=events_list[0]['formatted_state'],
         image_url0=events_list[0]['formatted_image_url'],
@@ -85,7 +92,7 @@ events_html = MIMEText(
         ticket_url1=events_list[1]['formatted_ticket_url'],
         month1=events_list[1]['formatted_month'],
         day1=events_list[1]['formatted_day'],
-        venue1=events_list[1]['formatted_venue'],
+        venue1=events_list[1]['formatted_venue_name'],
         city1=events_list[1]['formatted_city'],
         state1=events_list[1]['formatted_state'],
         image_url1=events_list[1]['formatted_image_url'],
@@ -93,7 +100,7 @@ events_html = MIMEText(
         ticket_url2=events_list[2]['formatted_ticket_url'],
         month2=events_list[2]['formatted_month'],
         day2=events_list[2]['formatted_day'],
-        venue2=events_list[2]['formatted_venue'],
+        venue2=events_list[2]['formatted_venue_name'],
         city2=events_list[2]['formatted_city'],
         state2=events_list[2]['formatted_state'],
         image_url2=events_list[2]['formatted_image_url'],
@@ -101,7 +108,7 @@ events_html = MIMEText(
         ticket_url3=events_list[3]['formatted_ticket_url'],
         month3=events_list[3]['formatted_month'],
         day3=events_list[3]['formatted_day'],
-        venue3=events_list[3]['formatted_venue'],
+        venue3=events_list[3]['formatted_venue_name'],
         city3=events_list[3]['formatted_city'],
         state3=events_list[3]['formatted_state'],
         image_url3=events_list[3]['formatted_image_url'],
@@ -109,7 +116,7 @@ events_html = MIMEText(
         ticket_url4=events_list[4]['formatted_ticket_url'],
         month4=events_list[4]['formatted_month'],
         day4=events_list[4]['formatted_day'],
-        venue4=events_list[4]['formatted_venue'],
+        venue4=events_list[4]['formatted_venue_name'],
         city4=events_list[4]['formatted_city'],
         state4=events_list[4]['formatted_state'],
         image_url4=events_list[4]['formatted_image_url'],
@@ -117,7 +124,7 @@ events_html = MIMEText(
         ticket_url5=events_list[5]['formatted_ticket_url'],
         month5=events_list[5]['formatted_month'],
         day5=events_list[5]['formatted_day'],
-        venue5=events_list[5]['formatted_venue'],
+        venue5=events_list[5]['formatted_venue_name'],
         city5=events_list[5]['formatted_city'],
         state5=events_list[5]['formatted_state'],
         image_url5=events_list[5]['formatted_image_url'],
@@ -125,7 +132,7 @@ events_html = MIMEText(
         ticket_url6=events_list[6]['formatted_ticket_url'],
         month6=events_list[6]['formatted_month'],
         day6=events_list[6]['formatted_day'],
-        venue6=events_list[6]['formatted_venue'],
+        venue6=events_list[6]['formatted_venue_name'],
         city6=events_list[6]['formatted_city'],
         state6=events_list[6]['formatted_state'],
         image_url6=events_list[6]['formatted_image_url'],
@@ -133,7 +140,7 @@ events_html = MIMEText(
         ticket_url7=events_list[7]['formatted_ticket_url'],
         month7=events_list[7]['formatted_month'],
         day7=events_list[7]['formatted_day'],
-        venue7=events_list[7]['formatted_venue'],
+        venue7=events_list[7]['formatted_venue_name'],
         city7=events_list[7]['formatted_city'],
         state7=events_list[7]['formatted_state'],
         image_url7=events_list[7]['formatted_image_url'],
@@ -141,7 +148,7 @@ events_html = MIMEText(
         ticket_url8=events_list[8]['formatted_ticket_url'],
         month8=events_list[8]['formatted_month'],
         day8=events_list[8]['formatted_day'],
-        venue8=events_list[8]['formatted_venue'],
+        venue8=events_list[8]['formatted_venue_name'],
         city8=events_list[8]['formatted_city'],
         state8=events_list[8]['formatted_state'],
         image_url8=events_list[8]['formatted_image_url'],
@@ -149,23 +156,24 @@ events_html = MIMEText(
         ticket_url9=events_list[9]['formatted_ticket_url'],
         month9=events_list[9]['formatted_month'],
         day9=events_list[9]['formatted_day'],
-        venue9=events_list[9]['formatted_venue'],
+        venue9=events_list[9]['formatted_venue_name'],
         city9=events_list[9]['formatted_city'],
         state9=events_list[9]['formatted_state'],
         image_url9=events_list[9]['formatted_image_url'],
     ), "html"
 )
+print(events_html)
 
-msg.attach(events_html)
-
+msg.set_content(events_html)
 
 # Create secure SMTP connection and send email
-#context = ssl.create_default_context()
-#with smtplib.SMTP_SSL("smtp.yahoo.com", 465, context=context) as server:
-#    server.login(sender_email, password)
-#    server.sendmail(
-#        sender_email, receiver_email, msg.as_string()
-#    )
+context = ssl.create_default_context()
+with smtplib.SMTP_SSL("smtp.mail.yahoo.com", 465, context=context) as server:
+    server.login(os.getenv('sender_email'), password)
+    server.sendmail(
+        os.getenv('sender_email'), os.getenv('receiver_email'), msg.as_string()
+    )
+    server.quit()
 
 
 
