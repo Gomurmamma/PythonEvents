@@ -10,12 +10,13 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from dotenv import load_dotenv, find_dotenv
 from jinja2 import Environment
+import html_template
 
 load_dotenv(find_dotenv())
 
 # Create MIMEMultipart object
 msg = MIMEMultipart("alternative")
-msg["Subject"] = "multipart test"
+msg["Subject"] = "Tonight's Featured Events in Your Area!"
 msg["From"] = os.getenv('sender_email')
 msg["To"] = os.getenv('receiver_email')
 
@@ -24,117 +25,6 @@ client_id = os.getenv('client_id')
 client_secret = os.getenv('client_secret')
 password = os.getenv('password')
 
-# Email template
-TEMPLATE = """"
-<html>
-<head><title> Events for {{Date}} </title></head>
-<body>
-<h1>Tonight's Featured Events</h1>
-
-<figure>
-<img src={{ image_url0 }} alt={{ title0 }}/>
-<figcaption>
-<h2> {{ title0 }} </h2>
-<p> {{ venue0 }}, {{ city0 }}, {{ state0 }}</p>
-<p>{{ event_month0 }} {{ event_day0 }}</p>
-<a href={{ ticket_url0 }}>Buy Tickets!</a>
-</figcaption>
-</figure>
-
-<figure>
-<img src={{ image_url1 }} alt={{ title1 }}/>
-<figcaption>
-<h2> {{ title1 }} </h2>
-<p> {{ venue1 }}, {{ city1 }}, {{ state1 }}</p>
-<p>{{ event_month1 }} {{ event_day1 }}</p>
-<a href={{ ticket_url1 }}>Buy Tickets!</a>
-</figcaption>
-</figure>
-
-<figure>
-<img src={{ image_url2 }} alt={{ title2 }}/>
-<figcaption>
-<h2> {{ title2 }} </h2>
-<p> {{ venue2 }}, {{ city2 }}, {{ state2 }}</p>
-<p>{{ event_month2 }} {{ event_day2 }}</p>
-<a href={{ ticket_url2 }}>Buy Tickets!</a>
-</figcaption>
-</figure>
-
-<figure>
-<img src={{ image_url3 }} alt={{ title3 }}/>
-<figcaption>
-<h2> {{ title3 }} </h2>
-<p> {{ venue3 }}, {{ city3 }}, {{ state3 }}</p>
-<p>{{ event_month3 }} {{ event_day3 }}</p>
-<a href={{ ticket_url3 }}>Buy Tickets!</a>
-</figcaption>
-</figure>
-
-<figure>
-<img src={{ image_url4 }} alt={{ title4 }}/>
-<figcaption>
-<h2> {{ title4 }} </h2>
-<p> {{ venue4 }}, {{ city4 }}, {{ state4 }}</p>
-<p>{{ event_month4 }} {{ event_day4 }}</p>
-<a href={{ ticket_url4 }}>Buy Tickets!</a>
-</figcaption>
-</figure>
-
-<figure>
-<img src={{ image_url5 }} alt={{ title5 }}/>
-<figcaption>
-<h2> {{ title5 }} </h2>
-<p> {{ venue5 }}, {{ city5 }}, {{ state5 }}</p>
-<p>{{ event_month5 }} {{ event_day5 }}</p>
-<a href={{ ticket_url5 }}>Buy Tickets!</a>
-</figcaption>
-</figure>
-
-<figure>
-<img src={{ image_url6 }} alt={{ title6 }}/>
-<figcaption>
-<h2> {{ title6 }} </h2>
-<p> {{ venue6 }}, {{ city6 }}, {{ state6 }}</p>
-<p>{{ event_month6 }} {{ event_day6 }}</p>
-<a href={{ ticket_url6 }}>Buy Tickets!</a>
-</figcaption>
-</figure>
-
-<figure>
-<img src={{ image_url7 }} alt={{ title7 }}/>
-<figcaption>
-<h2> {{ title7 }} </h2>
-<p> {{ venue7 }}, {{ city7 }}, {{ state7 }}</p>
-<p>{{ event_month7 }} {{ event_day7 }}</p>
-<a href={{ ticket_url7 }}>Buy Tickets!</a>
-</figcaption>
-</figure>
-
-<figure>
-<img src={{ image_url8 }} alt={{ title8 }}/>
-<figcaption>
-<h2> {{ title8 }} </h2>
-<p> {{ venue8 }}, {{ city8 }}, {{ state8 }}</p>
-<p>{{ event_month8 }} {{ event_day8 }}</p>
-<a href={{ ticket_url8 }}>Buy Tickets!</a>
-</figcaption>
-</figure>
-
-<figure>
-<img src={{ image_url9 }} alt={{ title9 }}/>
-<figcaption>
-<h2> {{ title9 }} </h2>
-<p> {{ venue9 }}, {{ city9 }}, {{ state9 }}</p>
-<p>{{ event_month9 }} {{ event_day9 }}</p>
-<a href={{ ticket_url9 }}>Buy Tickets!</a>
-</figcaption>
-</figure>
-
-</body>
-</html>
-"""""
-
 # SeatGeek Query params
 # Lat & Lng: Bk,Ny
 # Event type: Concert
@@ -142,7 +32,7 @@ TEMPLATE = """"
 # Per page: 10 (default)
 # page: 1 (default)
 response = requests.get(
-    f"https://api.seatgeek.com/2/events?lat=40.650002&lon=-73.949997&client_id={client_id}&type=concert&&client_secret={client_secret}")
+    f'https://api.seatgeek.com/2/events?lat=40.650002&lon=-73.949997&client_id={client_id}&type=concert&&client_secret={client_secret}')
 
 print(response.json())
 
@@ -180,9 +70,9 @@ for event in events:
 
 print(events_list)
 
-# Create text/html message from the template and values from each event
-msg = MIMEText(
-    Environment().from_string(TEMPLATE).render(
+# Create text/html message from the template and the values from each event
+events_html = MIMEText(
+    Environment().from_string(html_template.template).render(
         title0=events_list[0]['formatted_title'],
         ticket_url0=events_list[0]['formatted_ticket_url'],
         month0=events_list[0]['formatted_month'],
@@ -266,7 +156,16 @@ msg = MIMEText(
     ), "html"
 )
 
+msg.attach(events_html)
 
+
+# Create secure SMTP connection and send email
+#context = ssl.create_default_context()
+#with smtplib.SMTP_SSL("smtp.yahoo.com", 465, context=context) as server:
+#    server.login(sender_email, password)
+#    server.sendmail(
+#        sender_email, receiver_email, msg.as_string()
+#    )
 
 
 
