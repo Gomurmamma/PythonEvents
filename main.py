@@ -2,29 +2,30 @@
 # Tony Young
 # Clinton Merritt
 
-
-import smtplib, ssl, email, requests, os, datetime, jinja2
+import datetime
+import os
+import requests
+import smtplib
+import time
 from email.message import EmailMessage
-from email.headerregistry import Address
-from email.utils import make_msgid
-from email import encoders
-from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+
 from dotenv import load_dotenv, find_dotenv
 from jinja2 import Environment
-import html_template
 
+import html_template
 
 load_dotenv(find_dotenv())
 
-# Create base & fields for email
+# Create message base & fields for email
 msg = EmailMessage()
 msg["Subject"] = "Tonight's Featured Events in Your Area!"
 msg["From"] = os.getenv('sender_email')
 msg["To"] = os.getenv('receiver_email')
 
 # environment variables
+sender_email = os.getenv('sender_email')
+receiver_email = os.getenv('receiver_email')
 client_id = os.getenv('client_id')
 client_secret = os.getenv('client_secret')
 password = os.getenv('password')
@@ -36,18 +37,15 @@ password = os.getenv('password')
 # Per page: 10 (default)
 # page: 1 (default)
 response = requests.get(
-    f'https://api.seatgeek.com/2/events?lat=40.650002&lon=-73.949997&client_id={client_id}&type=concert&&client_secret={client_secret}')
-
-print(response.json())
+    f'https://api.seatgeek.com/2/events?lat=40.650002&lon=-73.949997&client_id={client_id}&type=concert'
+    f'&&client_secret={client_secret}')
 
 events = response.json()['events']
-print(events)
 
-print(events[0])
-
-# For storing formatted info from loop
+# List for formatted events
 events_list = []
 
+# Extract relevant event data and append to list
 for event in events:
     title = event['title']
     ticket_url = event['url']
@@ -70,14 +68,10 @@ for event in events:
                        'formatted_day': str(event_day), 'formatted_venue_name': venue_name, 'formatted_city': city,
                        'formatted_state': state, 'formatted_image_url': image_url,
                        }
-    print(formatted_event['formatted_day'])
-    print(formatted_event['formatted_month'])
 
     events_list.append(formatted_event)
 
-print(events_list)
-
-# Create text/html message from the template and the values from each event
+# Create html message from the template and then the values from each event
 events_html = MIMEText(
     Environment().from_string(html_template.template).render(
         title0=events_list[0]['formatted_title'],
@@ -162,19 +156,42 @@ events_html = MIMEText(
         image_url9=events_list[9]['formatted_image_url'],
     ), "html"
 )
-print(events_html)
 
-msg.set_content(events_html)
+msg.set_content(events_html, subtype="html")
 
-# Create secure SMTP connection and send email
-context = ssl.create_default_context()
-with smtplib.SMTP_SSL("smtp.mail.yahoo.com", 465, context=context) as server:
-    server.login(os.getenv('sender_email'), password)
-    server.sendmail(
-        os.getenv('sender_email'), os.getenv('receiver_email'), msg.as_string()
-    )
-    server.quit()
+# Create secure SMTP connection
+start = time.time()
+try:
+    smtp_ssl = smtplib.SMTP_SSL(host="smtp.gmail.com")
+except Exception as e:
+    print("ErrorType : {}, Error : {}".format(type(e).__name__, e))
+    smtp_ssl = None
 
+print("Connection Object : {}".format(smtp_ssl))
+print("Total Time Taken  : {:,.2f} Seconds".format(time.time() - start))
+
+# Log in to email account
+print("\nLogging In.....")
+resp_code, response = smtp_ssl.login(sender_email, password)
+
+print("Response Code : {}".format(resp_code))
+print("Response      : {}".format(response.decode()))
+
+# Send email
+print("\nSending Mail..........")
+
+msg.set_content(events_html, subtype="html")
+
+response = smtp_ssl.sendmail(sender_email, receiver_email, msg.as_string())
+
+print("List of Failed Recipients : {}".format(response))
+
+# Log out
+print("\nLogging Out....")
+resp_code, response = smtp_ssl.quit()
+
+print("Response Code : {}".format(resp_code))
+print("Response      : {}".format(response.decode()))
 
 
 
