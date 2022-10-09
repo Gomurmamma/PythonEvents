@@ -67,3 +67,4 @@ In the future we would like to return and implement the following
 
 ## Authors
 - GitHub - [@Gomurmamma](https://www.your-site.com)
+- GitHub - [@merritcl](https://github.com/merritcl)
