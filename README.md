@@ -7,7 +7,6 @@ This is a submission for the OSU Hackathon Fall 2022.
 - [Python Events](#python-events)
   - [Table of contents](#table-of-contents)
   - [Overview](#overview)
-    - [The Prompt](#the-prompt)
     - [Screenshots](#screenshots)
     
   - [Our Process](#our-process)
@@ -18,10 +17,7 @@ This is a submission for the OSU Hackathon Fall 2022.
    - [Authors](#authors)
 
 ## Overview
-Oregon State University(OSU) Hackathon club put togeather "Beaver Hacks Fall 2022." The goal of the event was to learn new skills, build cool stuff, and compete for prizes
- 
-## The Prompt
-
+Oregon State University(OSU) Hackathon club put togeather "Beaver Hacks Fall 2022." The event was set up to help students learn new skills, build cool stuff, and compete for prizes. Our team concisted of two new students to the OSU Computer Science post bacc program and competed in the new student catagory. The prompt of the Hackathon was "Life Hacks" and the goal was to build a program that fits this prompt in three days. 
 
 ## Screenshots
 ![Script Execution Preview](Images/gif_of_execution.gif)
