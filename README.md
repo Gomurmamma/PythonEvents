@@ -43,6 +43,14 @@ Oregon State University(OSU) Hackathon club put togeather "Beaver Hacks Fall 202
 -
 ## Continued development
 
+In the future we would like to return and implement the following
+- Using Time benchmarks to indicate script speed following program edits
+- CSS styling
+- API requests for other event types like comedy, sports, etc.
+- Deployment to PythonAnywhere & automating script call once API url has been whitelisted.
+- Web application for signing up for an email based on user's event preferences.
+  Python script will make a request to user address & preferences endpoint and send emails.
+
 ## Usefull resources
 
 
