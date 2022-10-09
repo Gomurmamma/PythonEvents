@@ -66,5 +66,5 @@ In the future we would like to return and implement the following
 - [Python Anywhere](https://stackoverflow.com/questions/71138889/max-retries-exceeded-caused-by-proxyerrorcannot-connect-to-proxy-oserror)
 
 ## Authors
-- GitHub - [@Gomurmamma](https://www.your-site.com)
+- GitHub - [@Gomurmamma](https://github.com/Gomurmamma)
 - GitHub - [@merritcl](https://github.com/merritcl)
