@@ -21,7 +21,7 @@ This is a submission for the OSU Hackathon Fall 2022.
 Oregon State University(OSU) Hackathon club put togeather "Beaver Hacks Fall 2022." The event was set up to help students learn new skills, build cool stuff, and compete for prizes. Our team concisted of two new students to the OSU Computer Science post bacc program and competed in the new student catagory. The prompt of the Hackathon was "Life Hacks" and the goal was to build a program that fits this prompt in three days. 
 
 ## The Challenge
-Based on the prompt our team wanted to pursue a project geared towards "Night Life". Accordingly, we came up with Python Events as a way to find out about what concerts were happening on a daily basis. Once called, the Python Events script makes a request to the SeatGeek API, formats the concert data to HTML and then sends a nicely formatted email to our inboxes.
+Based on the prompt our team wanted to pursue a project geared towards automating "Night Life". Accordingly, we came up with Python Events as a way to find out about what concerts were happening on a daily basis. Once called, the Python Events script makes a request to the SeatGeek API, formats the concert data to HTML and then sends a nicely formatted email to our inboxes.
 
 ## Screenshots
 ![Script Execution Preview](Images/gif_of_execution.gif)
@@ -43,7 +43,7 @@ Based on the prompt our team wanted to pursue a project geared towards "Night Li
 - Sending email from a python program 
 - Basic HTML formatting
 - Using Git and Github in a team enviornment
--
+
 ## Continued development
 
 In the future we would like to return and implement the following
@@ -58,4 +58,4 @@ In the future we would like to return and implement the following
 
 
 ## Authors
-
+- GitHub - [@Gomurmamma](https://www.your-site.com)
