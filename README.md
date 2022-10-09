@@ -55,7 +55,6 @@ In the future we would like to return and implement the following
   Python script will make a request to user address & preferences endpoint and send emails.
 
 ## Usefull resources
-- 
 - [Managing PyCharm projects under Version Control Systems](https://intellij-support.jetbrains.com/hc/en-us/articles/206544839)
 - [Forking vs Branching](https://stackoverflow.com/questions/3611256/forking-vs-branching-in-github)
 - [Environment Variables in Python](https://developer.vonage.com/blog/21/10/01/python-environment-variables-a-primer)
