@@ -24,7 +24,7 @@ Oregon State University(OSU) Hackathon club put togeather "Beaver Hacks Fall 202
 
 
 ## Screenshots
-![Script Execution Preview](gif_of_execution.gif)
+![Script Execution Preview](main/gif_of_execution.gif)
 
 
 ## Our Process
