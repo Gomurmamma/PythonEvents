@@ -55,7 +55,16 @@ In the future we would like to return and implement the following
   Python script will make a request to user address & preferences endpoint and send emails.
 
 ## Usefull resources
-
+- 
+- [Managing PyCharm projects under Version Control Systems](https://intellij-support.jetbrains.com/hc/en-us/articles/206544839)
+- [Forking vs Branching](https://stackoverflow.com/questions/3611256/forking-vs-branching-in-github)
+- [Environment Variables in Python](https://developer.vonage.com/blog/21/10/01/python-environment-variables-a-primer)
+- [Building dynamic HTML content](https://stackoverflow.com/questions/30180406/building-dynamic-html-email-content-with-python)
+- [Converting date-time strings](https://stackabuse.com/converting-strings-to-datetime-in-python/)
+- [Sending smtplib email - pt.1 ](https://pythonassets.com/posts/send-html-email-with-attachments-via-smtp/)
+- [Sending smtplib email - pt.2 ](https://coderzcolumn.com/tutorials/python/smtplib-simple-guide-to-sending-mails-using-python)
+- [Documentation on Python Email class](https://docs.python.org/3/library/email.html#module-email)
+- [Python Anywhere](https://stackoverflow.com/questions/71138889/max-retries-exceeded-caused-by-proxyerrorcannot-connect-to-proxy-oserror)
 
 ## Authors
 - GitHub - [@Gomurmamma](https://www.your-site.com)
