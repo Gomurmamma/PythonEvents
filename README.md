@@ -12,6 +12,7 @@ This is a submission for the OSU Hackathon Fall 2022.
   - [Our Process](#our-process)
     - [Built with](#built-with)
     - [Lessons Learned](#lessons-learned)
+    - [Continued development](#continued-development)
     - [Usefull resources](#usefull-resources)
    
    - [Authors](#authors)
@@ -27,15 +28,20 @@ Oregon State University(OSU) Hackathon club put togeather "Beaver Hacks Fall 202
 
 
 ## Built With
-requests library to access the seatgeek api
-smtplib library to send emails using the smtp protacol 
-os and dotenv librarys to store api credentials in an .env file
-datetime and time librarys
-jinja2 
+- requests library to access the seatgeek api
+- smtplib library to send emails using the smtp protacol 
+- os and dotenv librarys to store api credentials in an .env file
+- datetime and time librarys
+- jinja2 
 
 
 ## Lessons Learned
-
+- How to make simple API requests
+- Sending email from a python program 
+- Basic HTML formatting
+- Using Git and Github in a team enviornment
+-
+## Continued development
 
 ## Usefull resources
 
