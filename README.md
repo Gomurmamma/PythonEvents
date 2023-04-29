@@ -64,4 +64,4 @@ In the future we would like to return and implement the following
 
 ## Authors
 - GitHub - [@Gomurmamma](https://github.com/Gomurmamma)
-- GitHub - [@merritcl](https://github.com/merritcl)
+- GitHub - [@merritcl](https://github.com/tort-corp)
